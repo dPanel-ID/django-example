@@ -1,0 +1,26 @@
+version: v0.0.1-alpha.0
+
+setup:
+  language:
+    name: python
+    version: 3.10.4
+
+build:
+  target:
+    machine:
+      workdir: .
+      steps:
+        - name: "Build Django Example"
+          command:
+            - python -m venv .venv
+            # create venv and install dependencies in one session
+            - . .venv/bin/activate && pip install -r requirements.txt 
+
+run:
+  name: django-example
+  description: Python Django Example
+  command: daphne helloworld.asgi:application -p ${PORT}
+  port: 5000
+  environment:
+    - key: PORT
+      value: 5000
